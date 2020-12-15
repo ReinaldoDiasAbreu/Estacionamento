@@ -1,9 +1,3 @@
-package br.edu.ifnmg.poo.estacionamento.entity;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
-public class Aluguel extends Entidade{
 /*
  * The MIT License (MIT)
  *
@@ -26,6 +20,20 @@ public class Aluguel extends Entidade{
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+package br.edu.ifnmg.poo.estacionamento.entity;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+/**
+ * Representação do Aluguel
+ * 
+ * @author Cauã Ribeiro da Costa e Aguiar
+ * @version 1.0 , 15/12/2020
+ */
+public class Aluguel extends Entidade{
+
     private Cliente cliente;
 
     private Vaga vaga;
