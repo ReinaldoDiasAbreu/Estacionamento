@@ -1,21 +1,64 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) [2020] [Cauã Ribeiro da Costa e Aguiar]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package br.edu.ifnmg.poo.estacionamento.entity;
 
 import java.util.ArrayList;
 
-public class Estacionamento extends Entidade{
+/**
+ * Representação do Estacionamento
+ *
+ * @author Cauã Ribeiro
+ * @version 1.0 , 15/12/2020
+ */
+public class Estacionamento extends Entidade {
 
+    /**
+     * Nome do estacionamento
+     */
     private String nome;
-
+    /**
+     * Endereço do estacionamento
+     */
     private String endereco;
-
+    /**
+     * Telefone do estacionamento
+     */
     private String telefone;
-
+    /**
+     * Preço da hora do estacionamento
+     */
     private Float precoHora;
-
+    /**
+     * Quantidade de vagas do estacionamento
+     */
     private Integer quantVagas;
-
+    /**
+     * Array list das vagas que estão no estacionamento
+     */
     private ArrayList<Vaga> vagas;
-
+    /**
+     * Array list dos alugueis do estacionamento
+     */
     private ArrayList<Aluguel> alugueis;
 
     public Estacionamento() {
@@ -25,6 +68,15 @@ public class Estacionamento extends Entidade{
 
     }
 
+    /**
+     * Construtor sobrecarregado
+     *
+     * @param nome Nome do estacionamento
+     * @param endereco Endereço do estacionamento
+     * @param telefone Telefone do estacionamento
+     * @param precoHora Preço da Hora do estacionamento
+     * @param qtdVaga Quantidades de Vagas do estacionamento
+     */
     public Estacionamento(String nome, String endereco, String telefone, Float precoHora, Integer qtdVaga) {
         this();
         this.nome = nome;
@@ -40,19 +92,18 @@ public class Estacionamento extends Entidade{
      */
     private void carregarVagas() {
         for (int i = 0; i < quantVagas; i++) {
-           // vagas.add(new Vaga(i, Boolean.TRUE));
         }
     }
 
     /**
      * Procura uma vaga livre da ArrayList vagas
      *
-     * @return A vaga livre se possivel
+     * @return vaga A vaga livre se possivel
      */
     private Vaga retornaVagaLivre() {
-        
-        for (Vaga v : vagas){
-            if(v.getDisponivel() == 1){
+
+        for (Vaga v : vagas) {
+            if (v.getDisponivel() == 1) {
                 return v;
             }
         }
@@ -63,8 +114,8 @@ public class Estacionamento extends Entidade{
     /**
      * Aluga uma vaga para o Cliente
      *
-     * @param cliente
-     * @return Se a vaga foi alugada pelo Boolean
+     * @param cliente Cliente que vai alugar a vaga
+     * @return Se a vaga foi alugada com sucesso ou não
      */
     public Boolean alugarVaga(Cliente cliente) {
 
@@ -74,42 +125,32 @@ public class Estacionamento extends Entidade{
         } else {
             Aluguel alu = new Aluguel(vag, cliente);
             this.alugueis.add(alu);
-            //System.out.println("Vdd");
             return true;
         }
 
     }
 
     /**
-     * Libera a vaga que estava associada a um cliente e devolve disponivel para
-     * a vaga
+     * Libera a vaga que estava associada a um cliente e torna a vaga disponivel
+     * novamente
      *
-     * @param id
+     *
+     * @param id Id da vaga a ser liberada no banco de dados
      */
     public void liberarVaga(Integer id) {
         boolean existe = false;
-        for(Aluguel aluguel : alugueis){
-            if( id.equals(aluguel.getVaga().getId()) == true ){
+        for (Aluguel aluguel : alugueis) {
+            if (id.equals(aluguel.getVaga().getId()) == true) {
                 aluguel.registrarSaida(precoHora);
                 existe = true;
                 break;
             }
         }
-        
-        if(existe == false){
+
+        if (existe == false) {
             System.out.println("Vaga não existe!");
         }
-        
-        /*
-        for (int i = 0; i < alugueis.size(); i++) {
-            Aluguel aluguel = alugueis.get(i);
-            if (aluguel.getVaga().getId() == id) {
-                aluguel.registrarSaida(precoHora);
-            } else {
-                System.out.println("Vaga não existe!");
-            }
-        }
-        */
+
     }
 
     /**
@@ -117,7 +158,6 @@ public class Estacionamento extends Entidade{
      *
      */
 //<editor-fold defaultstate="collapsed" desc="Get/Set">
-
     public String getNome() {
         return nome;
     }
@@ -175,11 +215,16 @@ public class Estacionamento extends Entidade{
     }
 //</editor-fold>
 
+    /**
+     * Gera representação textual do objeto atual.
+     *
+     * @return Texto representativo do objeto atual
+     */
     @Override
     public String toString() {
-        return "Estacionamento{" + "nome=" + nome + ", endereco=" + endereco 
-                + ", telefone=" + telefone + ", precoHora=" + precoHora 
-                + ", quantVagas=" + quantVagas + ", vagas=" + vagas 
+        return "Estacionamento{" + "nome=" + nome + ", endereco=" + endereco
+                + ", telefone=" + telefone + ", precoHora=" + precoHora
+                + ", quantVagas=" + quantVagas + ", vagas=" + vagas
                 + ", alugueis=" + alugueis + '}';
     }
 
