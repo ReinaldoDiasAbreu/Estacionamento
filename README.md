@@ -1,4 +1,3 @@
-# ControleTarefasAlpha
-Testes com persistência de dados empregando JDBC e padrão de projeto DAO com tipos genéricos
+# Controle Estacionamento
+Sistema de controle de estacionamento
 
-* Usar este esqueleto como modelo para as implementações dos projetos específicos
