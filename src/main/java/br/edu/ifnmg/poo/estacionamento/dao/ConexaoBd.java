@@ -4,7 +4,7 @@
  * Bacharelado em Ciência da Computação 
  * do IFNMG - Câmpus Montes Claros
  */
-package br.edu.ifnmg.poo.controletarefasalpha.dao;
+package br.edu.ifnmg.poo.estacionamento.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class ConexaoBd {
      * Inicialização de valores estáticos.
      */
     static {
-        if (true) {
+        if (false) {
             // Servidor Local
             URL = "jdbc:mysql://127.0.0.1:3306/tarefas"
                     + "?useUnicode=true"
@@ -63,7 +63,7 @@ public class ConexaoBd {
         } else {
             // Servidor remoto
             Properties prop = new Properties();
-            String propFileName = "remotemysql.properties";
+            String propFileName = "bd.properties";
 
             InputStream inputStream = ConexaoBd.class.getClassLoader()
                     .getResourceAsStream(propFileName);

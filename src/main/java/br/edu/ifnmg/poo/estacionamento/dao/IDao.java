@@ -4,7 +4,7 @@
  * Bacharelado em Ciência da Computação 
  * do IFNMG - Câmpus Montes Claros
  */
-package br.edu.ifnmg.poo.controletarefasalpha.dao;
+package br.edu.ifnmg.poo.estacionamento.dao;
 
 import java.util.List;
 

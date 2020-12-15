@@ -4,7 +4,7 @@
  * Bacharelado em Ciência da Computação 
  * do IFNMG - Câmpus Montes Claros
  */
-package br.edu.ifnmg.poo.controletarefasalpha.entity;
+package br.edu.ifnmg.poo.estacionamento.entity;
 
 /**
  * Modelo geral para entidades.

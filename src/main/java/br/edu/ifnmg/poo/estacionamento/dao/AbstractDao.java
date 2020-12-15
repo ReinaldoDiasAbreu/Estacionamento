@@ -4,15 +4,14 @@
  * Bacharelado em Ciência da Computação 
  * do IFNMG - Câmpus Montes Claros
  */
-package br.edu.ifnmg.poo.controletarefasalpha.dao;
+package br.edu.ifnmg.poo.estacionamento.dao;
 
-import br.edu.ifnmg.poo.controletarefasalpha.entity.Entidade;
+import br.edu.ifnmg.poo.estacionamento.entity.Entidade;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,7 +72,7 @@ public abstract class AbstractDao<T, K> implements IDao<T, K> {
 
         } else {
             // Atualizar registro
-
+            
             try (PreparedStatement pstmt
                     = ConexaoBd.getConexao().prepareStatement(
                             // Sentença SQL para atualização de registros
@@ -81,7 +80,7 @@ public abstract class AbstractDao<T, K> implements IDao<T, K> {
 
                 // Prepara a declaração com os dados do objeto passado
                 montarDeclaracao(pstmt, o);
-
+               
                 // Executa o comando SQL
                 pstmt.executeUpdate();
 
@@ -183,10 +182,10 @@ public abstract class AbstractDao<T, K> implements IDao<T, K> {
      * persistidos.
      */
     @Override
-    public List<T> localizarTodos() {
+    public ArrayList<T> localizarTodos() {
 
         // Declara referência para reter o(s) objeto(s) a ser(em) recuperado(s)
-        List<T> objetos = new ArrayList<>();
+        ArrayList<T> objetos = new ArrayList<>();
 
         // Tenta preparar uma sentença SQL para a conexão já estabelecida
         try (PreparedStatement pstmt
@@ -296,6 +295,6 @@ public abstract class AbstractDao<T, K> implements IDao<T, K> {
      * relacional.
      * @return Lista de objeto(s) constituído(s).
      */
-    public abstract List<T> extrairObjetos(ResultSet resultSet);
+    public abstract ArrayList<T> extrairObjetos(ResultSet resultSet);
 
 }
