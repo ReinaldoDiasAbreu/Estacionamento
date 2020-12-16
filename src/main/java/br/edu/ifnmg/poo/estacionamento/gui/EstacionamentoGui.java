@@ -5,6 +5,8 @@
  */
 package br.edu.ifnmg.poo.estacionamento.gui;
 
+import br.edu.ifnmg.poo.estacionamento.entity.Cliente;
+
 /**
  *
  * @author Mirrális
@@ -82,7 +84,7 @@ public class EstacionamentoGui extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(379, Short.MAX_VALUE)
+                .addContainerGap(370, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnListClients)
                     .addComponent(btnRent)
@@ -118,13 +120,14 @@ public class EstacionamentoGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRentActionPerformed
 
     private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
-        CriarCliente cliente = new CriarCliente();
+        // Also use EditarCliente for adding new clients, but passing an empty client
+        EditarCliente cliente = new EditarCliente(new Cliente(), new ClientesCadastrados(), true);
         cliente.setLocationRelativeTo(this);
         cliente.setVisible(true);
     }//GEN-LAST:event_btnAddClientActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-        // TODO add your handling code here:
+        System.out.println(new Cliente());
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnListClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListClientsActionPerformed

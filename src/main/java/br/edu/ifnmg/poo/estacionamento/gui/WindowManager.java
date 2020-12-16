@@ -46,7 +46,7 @@ public class WindowManager extends javax.swing.JFrame {
         
         initComponents();
         
-        if(parking.size() >= 1)
+        if(parking.size() > 0)
         {
             //Abre o painel do estacionamento
             EstacionamentoGui parkingGui = new EstacionamentoGui();
@@ -60,7 +60,6 @@ public class WindowManager extends javax.swing.JFrame {
             createParking.setLocationRelativeTo(this);
             createParking.setVisible(true);
         }
-        
     }
 
     /**
