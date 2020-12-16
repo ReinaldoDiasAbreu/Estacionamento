@@ -144,16 +144,13 @@ public class ClientesCadastrados extends javax.swing.JFrame {
             
             registeredClientsList.setSelectedIndex(selectedClientIndex);
 
-            System.out.println(selectedClientIndex);
-
             // Mostre as opções em pop-up
             popUpClient.show(registeredClientsList, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_registeredClientsListMouseReleased
 
     private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
-        
-        EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, true);
+        EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, false);
         editClient.setLocationRelativeTo(this);
         editClient.setVisible(true);
     }//GEN-LAST:event_menuEditActionPerformed
@@ -161,7 +158,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
     private void menuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeleteActionPerformed
         
         // Remove do banco primeiro
-        //new TarefaDao().excluir(clientsListModel.get(selectedClientIndex));
+        new ClienteDao().excluir(clientsListModel.get(selectedClientIndex));
         
         clientsListModel.remove(registeredClientsList.getSelectedIndex());
     }//GEN-LAST:event_menuDeleteActionPerformed

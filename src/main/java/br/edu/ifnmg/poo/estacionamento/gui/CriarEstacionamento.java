@@ -40,7 +40,7 @@ public class CriarEstacionamento extends javax.swing.JFrame {
     public CriarEstacionamento() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,6 +50,10 @@ public class CriarEstacionamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        errorDialogue = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        btnGoBack = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -63,7 +67,62 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         txtTotalSlots = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
 
+        errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Algum dos campos preenchidos está inválido!");
+
+        btnGoBack.setText("Voltar");
+        btnGoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(btnGoBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(btnGoBack)
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout errorDialogueLayout = new javax.swing.GroupLayout(errorDialogue.getContentPane());
+        errorDialogue.getContentPane().setLayout(errorDialogueLayout);
+        errorDialogueLayout.setHorizontalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        errorDialogueLayout.setVerticalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        errorDialogue.setVisible(false);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Criar Estacionamento");
 
         jLabel1.setText("Nome:");
 
@@ -105,7 +164,7 @@ public class CriarEstacionamento extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSave)
-                .addGap(34, 34, 34))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,9 +189,9 @@ public class CriarEstacionamento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtTotalSlots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addComponent(btnSave)
-                .addGap(20, 20, 20))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,78 +216,75 @@ public class CriarEstacionamento extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
-        Estacionamento parking = new Estacionamento();
+        String name = txtName.getText();
+        int nameSize = name.length();
         
-        parking.setNome(txtName.getText());
-        parking.setEndereco(txtAddress.getText());
-        parking.setTelefone(txtPhone.getText());
+        String address = txtAddress.getText();
+        int addressSize = address.length();
         
-        Float hourlyPrice = Float.parseFloat(txtHourlyPrice.getText());
-        parking.setPrecoHora(hourlyPrice > 0 ? hourlyPrice : 1.F);
+        String phone = txtPhone.getText();
+        int phoneSize = phone.length();
         
-        Integer totalSlots = Integer.parseInt(txtTotalSlots.getText());
-        parking.setQuantVagas(totalSlots > 0 ? totalSlots : 2);
-        
-        new EstacionamentoDao().salvar(parking);
-        
-        for(int i=0; i < parking.getQuantVagas(); i++){
-            Vaga vaga = new Vaga();
-            vaga.setDisponivel(1);
-            new VagaDao().salvar(vaga);
+        try
+        {
+            if(!((nameSize > 0 && nameSize <= 100) && 
+                 (addressSize > 0 && addressSize <= 100) && 
+                 (phoneSize > 0 && phoneSize <= 11)))
+            {
+                throw new Exception();
+            }
+            
+            Estacionamento parking = new Estacionamento();
+
+            parking.setNome(name);
+            parking.setEndereco(address);
+            parking.setTelefone(phone);
+
+            Float hourlyPrice = Float.parseFloat(txtHourlyPrice.getText());
+            parking.setPrecoHora(hourlyPrice > 0 ? hourlyPrice : 1.F);
+            
+            Integer totalSlots = Integer.parseInt(txtTotalSlots.getText());
+            parking.setQuantVagas(totalSlots > 0 ? totalSlots : 2);
+            
+            new EstacionamentoDao().salvar(parking);
+
+            for(int i=0; i < parking.getQuantVagas(); i++){
+                Vaga vaga = new Vaga();
+                vaga.setDisponivel(1);
+                new VagaDao().salvar(vaga);
+            }
+
+            EstacionamentoGui parkingGUI = new EstacionamentoGui();
+            parkingGUI.setLocationRelativeTo(this);
+            parkingGUI.setVisible(true);
+
+            dispose();
         }
-        
-        EstacionamentoGui parkingGUI = new EstacionamentoGui();
-        parkingGUI.setLocationRelativeTo(this);
-        parkingGUI.setVisible(true);
-        
-        dispose();
+        catch(Exception e)
+        {
+            errorDialogue.setSize(errorDialogue.getPreferredSize());
+            errorDialogue.setLocationRelativeTo(this);
+            errorDialogue.setVisible(true);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
+        errorDialogue.dispose();
+    }//GEN-LAST:event_btnGoBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CriarEstacionamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CriarEstacionamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CriarEstacionamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CriarEstacionamento.class.getName()).log(jtxtHourlyPriceil.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CriarEstacionamento().setVisible(true);
-//            }
-//        });
-//    }
-
-    // Variables declaration - do not modify                     
+    private javax.swing.JButton btnGoBack;
     private javax.swing.JButton btnSave;
+    private javax.swing.JDialog errorDialogue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtHourlyPrice;
     private javax.swing.JTextField txtName;
