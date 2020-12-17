@@ -32,7 +32,8 @@ import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 
 /**
- *
+ * Window for renting a slot
+ * 
  * @author Mirrális
  */
 public class AlugarVaga extends javax.swing.JFrame {
@@ -43,7 +44,7 @@ public class AlugarVaga extends javax.swing.JFrame {
     private  final DefaultListModel<Vaga> availableSlotsModel;
 
     /**
-     * Creates new form Alugar
+     * Creates new form AlugarVaga
      */
     public AlugarVaga() {
         
@@ -224,7 +225,10 @@ public class AlugarVaga extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Saves the rent information in the database when clicking "Alugar"
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
         Cliente client = clientsList.getSelectedValue();
@@ -251,11 +255,17 @@ public class AlugarVaga extends javax.swing.JFrame {
             errorDialogue.setVisible(true);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
-
+    
+    /**
+     * Releases this window's resources when clicking "Cancelar"
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Releases the error dialogue's resources when clicking "Voltar"
+     */
     private void btnGoBackErrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackErrActionPerformed
         errorDialogue.dispose();
     }//GEN-LAST:event_btnGoBackErrActionPerformed
