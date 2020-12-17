@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
- *
+ * Show all registered clients, if any. And allow to update and delete them if necessary.
+ * 
  * @author Mirrális
  */
 public class ClientesCadastrados extends javax.swing.JFrame {

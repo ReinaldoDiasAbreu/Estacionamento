@@ -127,7 +127,9 @@ public class EstacionamentoGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddClientActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-        System.out.println(new Cliente());
+        Pagamento payment = new Pagamento();
+        payment.setLocationRelativeTo(this);
+        payment.setVisible(true);
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnListClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListClientsActionPerformed
