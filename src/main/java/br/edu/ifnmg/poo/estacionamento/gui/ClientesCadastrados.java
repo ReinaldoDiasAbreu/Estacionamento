@@ -36,7 +36,7 @@ import javax.swing.DefaultListModel;
  */
 public class ClientesCadastrados extends javax.swing.JFrame {
 
-    private DefaultListModel<Cliente> clientsListModel;
+    private DefaultListModel<Cliente> clientsListModel = new DefaultListModel<>();
     
     private int selectedClientIndex;
     
@@ -44,8 +44,6 @@ public class ClientesCadastrados extends javax.swing.JFrame {
      * Creates new form ClientesCadastrados
      */
     public ClientesCadastrados() {
-        
-        clientsListModel = new DefaultListModel<>();
         
         ArrayList<Cliente> clients = new ClienteDao().localizarTodos();
 

@@ -32,14 +32,73 @@ public class FazerLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        errorDialogue = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        lblErrorMsg = new javax.swing.JLabel();
+        btnErrGoBack = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCPF = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtPwd = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
+        txtPwd = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        errorDialogue.setResizable(false);
+
+        lblErrorMsg.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMsg.setText("Algum dos campos preenchidos está inválido!");
+
+        btnErrGoBack.setText("Voltar");
+        btnErrGoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnErrGoBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(btnErrGoBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(lblErrorMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(lblErrorMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(btnErrGoBack)
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout errorDialogueLayout = new javax.swing.GroupLayout(errorDialogue.getContentPane());
+        errorDialogue.getContentPane().setLayout(errorDialogueLayout);
+        errorDialogueLayout.setHorizontalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        errorDialogueLayout.setVerticalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        errorDialogue.setVisible(false);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setResizable(false);
 
@@ -67,9 +126,9 @@ public class FazerLogin extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                    .addComponent(txtPwd))
                 .addContainerGap(199, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -86,8 +145,8 @@ public class FazerLogin extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
@@ -120,12 +179,12 @@ public class FazerLogin extends javax.swing.JFrame {
         String cpf = txtCPF.getText();
         int cpfSize = cpf.length();
         
-        String pwd = txtPwd.getText();
+        String pwd = String.valueOf(txtPwd.getPassword());
         int pwdSize = pwd.length();
         
         try {
             if(!((cpfSize > 0 && cpfSize <= 11) && (pwdSize > 0 && pwdSize <= 20)))
-                throw new Exception();
+                throw new Exception("Algum dos campos preenchidos está inválido!");
             
             Funcionario temp = new Funcionario();
             temp.setCpf(cpf);
@@ -134,7 +193,7 @@ public class FazerLogin extends javax.swing.JFrame {
             Funcionario employee = new FuncionarioDao().localizarPorCpfSenha(temp);
             
             if(employee == null)
-                throw new Exception();
+                throw new Exception("Funcionário não encontrado");
             
             EstacionamentoGui parkingGui = new EstacionamentoGui();
             parkingGui.setLocationRelativeTo(this);
@@ -143,10 +202,17 @@ public class FazerLogin extends javax.swing.JFrame {
             dispose();
 
         } catch (Exception e) {
-            
+            errorDialogue.setSize(errorDialogue.getPreferredSize());
+            errorDialogue.setLocationRelativeTo(this);
+            lblErrorMsg.setText(e.getMessage());
+            errorDialogue.setVisible(true);
         }
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnErrGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErrGoBackActionPerformed
+        errorDialogue.dispose();
+    }//GEN-LAST:event_btnErrGoBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,11 +250,15 @@ public class FazerLogin extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnErrGoBack;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JDialog errorDialogue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblErrorMsg;
     private javax.swing.JTextField txtCPF;
-    private javax.swing.JTextField txtPwd;
+    private javax.swing.JPasswordField txtPwd;
     // End of variables declaration//GEN-END:variables
 }
