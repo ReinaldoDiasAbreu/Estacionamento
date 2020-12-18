@@ -35,7 +35,7 @@ public class Funcionario extends Entidade {
 /**
  * Senha do funcionário
  */
-    private Long senha;
+    private String senha;
 /**
  * CPF do funcionário
  */
@@ -57,7 +57,7 @@ public class Funcionario extends Entidade {
  * @param cpf Cpf do funcionario
  * @param telefone Telefone do funcionario
  */
-    public Funcionario(String nome, Long senha, String cpf, String telefone) {
+    public Funcionario(String nome, String senha, String cpf, String telefone) {
         this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
@@ -73,11 +73,11 @@ public class Funcionario extends Entidade {
         this.nome = nome;
     }
 
-    public Long getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(Long senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

@@ -49,9 +49,9 @@ public class WindowManager extends javax.swing.JFrame {
         if(parking.size() > 0)
         {
             //Abre o painel do estacionamento
-            EstacionamentoGui parkingGui = new EstacionamentoGui();
-            parkingGui.setLocationRelativeTo(this);
-            parkingGui.setVisible(true);
+            FazerLogin login = new FazerLogin();
+            login.setLocationRelativeTo(this);
+            login.setVisible(true);
         }
         else
         {
@@ -72,6 +72,7 @@ public class WindowManager extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

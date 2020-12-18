@@ -66,7 +66,6 @@ public class VagaDao extends AbstractDao <Vaga, Long> {
         return "SELECT * FROM VAGA WHERE disponivel = 1;";
     }
     
-
     @Override
     public void montarDeclaracao(PreparedStatement pstmt, Vaga o) {
         try {
@@ -128,6 +127,10 @@ public class VagaDao extends AbstractDao <Vaga, Long> {
         return vagas;
     }
     
+    /**
+     * Retorna lista de vagas disponíveis
+     * @return ArrayList vaga
+     */
     public ArrayList<Vaga> localizarVagasDisponiveis() {
 
         // Declara referência para reter o(s) objeto(s) a ser(em) recuperado(s)

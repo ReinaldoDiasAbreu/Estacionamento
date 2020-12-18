@@ -1,57 +1,37 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) [2020] [Cauã Ribeiro da Costa e Aguiar]
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/* 
+ * Material didático destinado ao curso
+ * de Programação Orientada a Objetos do 
+ * Bacharelado em Ciência da Computação 
+ * do IFNMG - Câmpus Montes Claros
  */
-
 package br.edu.ifnmg.poo.estacionamento.gui;
 
-import br.edu.ifnmg.poo.estacionamento.dao.ClienteDao;
-import br.edu.ifnmg.poo.estacionamento.entity.Cliente;
+import br.edu.ifnmg.poo.estacionamento.dao.AluguelDao;
+import br.edu.ifnmg.poo.estacionamento.entity.Aluguel;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
- * Show all registered clients, if any. And allow to update and delete them if necessary.
- * 
- * @author Mirrális
+ *
+ * @author Makerspace3
  */
-public class ClientesCadastrados extends javax.swing.JFrame {
-
-    private DefaultListModel<Cliente> clientsListModel = new DefaultListModel<>();
+public class AlugueisCadastrados extends javax.swing.JFrame {
     
-    private int selectedClientIndex;
+    private DefaultListModel<Aluguel> rentsListModel = new DefaultListModel<>();
+    private int selectedRentIndex;
     
     /**
-     * Creates new form ClientesCadastrados
+     * Creates new form AlugueisCadastrados
      */
-    public ClientesCadastrados() {
-        
-        ArrayList<Cliente> clients = new ClienteDao().localizarTodos();
+    public AlugueisCadastrados() {
+        ArrayList<Aluguel> rents = new AluguelDao().localizarTodos();
 
-        clientsListModel.addAll(clients);
+        rentsListModel.addAll(rents);
 
         initComponents();
         
-        registeredClientsList.setModel(clientsListModel);
+        registeredRentsList.setModel(rentsListModel);
     }
 
     /**
@@ -63,23 +43,13 @@ public class ClientesCadastrados extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuEdit = new javax.swing.JMenuItem();
-        popUpClient = new javax.swing.JPopupMenu();
+        popUpRent = new javax.swing.JPopupMenu();
         menuDelete = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        registeredClientsList = new javax.swing.JList<>();
+        registeredRentsList = new javax.swing.JList<>();
         btnGoBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-
-        menuEdit.setMnemonic('e');
-        menuEdit.setText("Editar");
-        menuEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditActionPerformed(evt);
-            }
-        });
-        popUpClient.add(menuEdit);
 
         menuDelete.setMnemonic('x');
         menuDelete.setText("Excluir");
@@ -88,19 +58,17 @@ public class ClientesCadastrados extends javax.swing.JFrame {
                 menuDeleteActionPerformed(evt);
             }
         });
-        popUpClient.add(menuDelete);
+        popUpRent.add(menuDelete);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Clientes Cadastrados");
-        setResizable(false);
 
-        registeredClientsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        registeredClientsList.addMouseListener(new java.awt.event.MouseAdapter() {
+        registeredRentsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        registeredRentsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                registeredClientsListMouseReleased(evt);
+                registeredRentsListMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(registeredClientsList);
+        jScrollPane1.setViewportView(registeredRentsList);
 
         btnGoBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnGoBack.setText("Voltar");
@@ -111,7 +79,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Lista de Clientes");
+        jLabel1.setText("Lista de Alugueis");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,42 +129,29 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void registeredRentsListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registeredRentsListMouseReleased
+
+        if (evt.getButton() == MouseEvent.BUTTON3 && registeredRentsList.getModel().getSize() > 0) {
+
+            selectedRentIndex = registeredRentsList.locationToIndex(evt.getPoint());
+
+            registeredRentsList.setSelectedIndex(selectedRentIndex);
+
+            // Mostre as opções em pop-up
+            popUpRent.show(registeredRentsList, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_registeredRentsListMouseReleased
+
     private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
         dispose();
     }//GEN-LAST:event_btnGoBackActionPerformed
 
-    private void registeredClientsListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registeredClientsListMouseReleased
-        
-        if (evt.getButton() == MouseEvent.BUTTON3 && registeredClientsList.getModel().getSize() > 0) {
-
-            selectedClientIndex = registeredClientsList.locationToIndex(evt.getPoint());
-            
-            registeredClientsList.setSelectedIndex(selectedClientIndex);
-
-            // Mostre as opções em pop-up
-            popUpClient.show(registeredClientsList, evt.getX(), evt.getY());
-        }
-    }//GEN-LAST:event_registeredClientsListMouseReleased
-
-    private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
-        EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, false);
-        editClient.setLocationRelativeTo(this);
-        editClient.setVisible(true);
-    }//GEN-LAST:event_menuEditActionPerformed
-
     private void menuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeleteActionPerformed
-        
         // Remove do banco primeiro
-        new ClienteDao().excluir(clientsListModel.get(selectedClientIndex));
-        
-        clientsListModel.remove(registeredClientsList.getSelectedIndex());
+        new AluguelDao().excluir(rentsListModel.get(selectedRentIndex));
+        rentsListModel.remove(registeredRentsList.getSelectedIndex());
     }//GEN-LAST:event_menuDeleteActionPerformed
 
-    void updateClientsListModel(Cliente client)
-    {
-        clientsListModel.set(selectedClientIndex, client);
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -214,20 +169,20 @@ public class ClientesCadastrados extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ClientesCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AlugueisCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ClientesCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AlugueisCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ClientesCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AlugueisCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ClientesCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AlugueisCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new ClientesCadastrados().setVisible(true);
+//                new AlugueisCadastrados().setVisible(true);
 //            }
 //        });
 //    }
@@ -238,8 +193,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuDelete;
-    private javax.swing.JMenuItem menuEdit;
-    private javax.swing.JPopupMenu popUpClient;
-    private javax.swing.JList<Cliente> registeredClientsList;
+    private javax.swing.JPopupMenu popUpRent;
+    private javax.swing.JList<Aluguel> registeredRentsList;
     // End of variables declaration//GEN-END:variables
 }

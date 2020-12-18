@@ -51,7 +51,7 @@ public class AluguelDao extends AbstractDao<Aluguel, Long> {
 
     @Override
     public String getDeclaracaoSelectTodos() {
-        return "SELET * FROM ALUGUEL";
+        return "SELECT * FROM ALUGUEL";
     }
 
     @Override

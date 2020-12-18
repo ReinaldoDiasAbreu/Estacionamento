@@ -125,7 +125,6 @@ public class ConexaoBd {
         if (conexao == null) {
             // ... tenta ...
             try {
-                System.out.println(">> Nova conexão estabelecida com o banco de dados");
                 // ... estabelecer e reter a conexão a partir da URL, 
                 // do usuário e da senha fornecidos
                 conexao = DriverManager.getConnection(URL, usuario, senha);
