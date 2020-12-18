@@ -22,8 +22,6 @@
  */
 package br.edu.ifnmg.poo.estacionamento.entity;
 
-import java.util.ArrayList;
-
 /**
  * Representação do Estacionamento
  *
@@ -52,20 +50,8 @@ public class Estacionamento extends Entidade {
      * Quantidade de vagas do estacionamento
      */
     private Integer quantVagas;
-    /**
-     * Array list das vagas que estão no estacionamento
-     */
-    private ArrayList<Vaga> vagas;
-    /**
-     * Array list dos alugueis do estacionamento
-     */
-    private ArrayList<Aluguel> alugueis;
 
     public Estacionamento() {
-
-        this.vagas = new ArrayList<>();
-        this.alugueis = new ArrayList<>();
-
     }
 
     /**
@@ -78,80 +64,13 @@ public class Estacionamento extends Entidade {
      * @param qtdVaga Quantidades de Vagas do estacionamento
      */
     public Estacionamento(String nome, String endereco, String telefone, Float precoHora, Integer qtdVaga) {
-        this();
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.precoHora = precoHora;
         this.quantVagas = qtdVaga;
-        carregarVagas();
     }
 
-    /**
-     * Carrega todas as vagas do Banco de Dados
-     */
-    private void carregarVagas() {
-        for (int i = 0; i < quantVagas; i++) {
-        }
-    }
-
-    /**
-     * Procura uma vaga livre da ArrayList vagas
-     *
-     * @return vaga A vaga livre se possivel
-     */
-    private Vaga retornaVagaLivre() {
-
-        for (Vaga v : vagas) {
-            if (v.getDisponivel() == 1) {
-                return v;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Aluga uma vaga para o Cliente
-     *
-     * @param cliente Cliente que vai alugar a vaga
-     * @return Se a vaga foi alugada com sucesso ou não
-     */
-    public Boolean alugarVaga(Cliente cliente) {
-
-        Vaga vag = retornaVagaLivre();
-        if (vag == null) {
-            return false;
-        } else {
-            Aluguel alu = new Aluguel(vag, cliente);
-            this.alugueis.add(alu);
-            return true;
-        }
-
-    }
-
-    /**
-     * Libera a vaga que estava associada a um cliente e torna a vaga disponivel
-     * novamente
-     *
-     *
-     * @param id Id da vaga a ser liberada no banco de dados
-     */
-    public void liberarVaga(Integer id) {
-        boolean existe = false;
-        for (Aluguel aluguel : alugueis) {
-            if (id.equals(aluguel.getVaga().getId()) == true) {
-                aluguel.registrarSaida(precoHora);
-                existe = true;
-                break;
-            }
-        }
-
-        if (existe == false) {
-            System.out.println("Vaga não existe!");
-        }
-
-    }
 
     /**
      * Getters e Setters dos atributos da classe
@@ -198,21 +117,6 @@ public class Estacionamento extends Entidade {
         this.quantVagas = quantVagas;
     }
 
-    public ArrayList<Vaga> getVagas() {
-        return vagas;
-    }
-
-    public void setVagas(ArrayList<Vaga> vagas) {
-        this.vagas = vagas;
-    }
-
-    public ArrayList<Aluguel> getAlugueis() {
-        return alugueis;
-    }
-
-    public void setAlugueis(ArrayList<Aluguel> alugueis) {
-        this.alugueis = alugueis;
-    }
 //</editor-fold>
 
     /**
@@ -224,8 +128,7 @@ public class Estacionamento extends Entidade {
     public String toString() {
         return "Estacionamento{" + "nome=" + nome + ", endereco=" + endereco
                 + ", telefone=" + telefone + ", precoHora=" + precoHora
-                + ", quantVagas=" + quantVagas + ", vagas=" + vagas
-                + ", alugueis=" + alugueis + '}';
+                + ", quantVagas=" + quantVagas + '}';
     }
 
 }
