@@ -22,8 +22,9 @@
  */
 package br.edu.ifnmg.poo.estacionamento.entity;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Representação do Aluguel
@@ -44,18 +45,20 @@ public class Aluguel extends Entidade {
     /**
      * Data da entrada na vaga
      */
-    private LocalDateTime dataEntrada;
+    private Timestamp dataEntrada;
     /**
      * Data da saida da vaga
      */
-    private LocalDateTime dataSaida;
+    private Timestamp dataSaida;
     /**
      * Valor total que o cliente devera pagar
      */
     private Float valorTotal;
 
     public Aluguel() {
-
+        this.dataEntrada = null;
+        this.dataSaida = null;
+        this.valorTotal = 0F;
     }
 
     /**
@@ -65,6 +68,7 @@ public class Aluguel extends Entidade {
      * @param cliente Cliente que vai alugar
      */
     public Aluguel(Vaga vaga, Cliente cliente) {
+        this();
         this.vaga = vaga;
         this.cliente = cliente;
         this.registraEntrada();
@@ -76,7 +80,7 @@ public class Aluguel extends Entidade {
      * @return Boolean caso entrada confirmada.
      */
     public Boolean registraEntrada() {
-        this.dataEntrada = LocalDateTime.now();
+        this.dataEntrada = getDateNow();
         return vaga.ocupaVaga() != null;
     }
 
@@ -87,8 +91,8 @@ public class Aluguel extends Entidade {
      * @param precoHora O preço da hora que o estacionamento definiu
      */
     public void registrarSaida(Float precoHora) {
-        this.dataSaida = LocalDateTime.now();
-        calcularPreco(precoHora);
+        this.dataSaida = getDateNow();
+        valorTotal = calcularPreco(precoHora);
         vaga.liberaVaga();
     }
 
@@ -100,15 +104,28 @@ public class Aluguel extends Entidade {
      * @return valorTotal O valor total do preço que o cliente ira pagar
      */
     public Float calcularPreco(Float precoHora) {
-        if (ChronoUnit.MINUTES.between(dataEntrada, dataSaida) < 60L) {
-            return valorTotal = precoHora;
-        } else {
-            valorTotal = precoHora * ((ChronoUnit.MINUTES.between(dataEntrada, dataSaida)) / 60.F);
-            return valorTotal;
-        }
+        
+        long dateIn = dataEntrada.getTime();
+        long dateOut = dataSaida.getTime();
 
+        long diff = dateOut - dateIn;
+        long diffMinutes = diff / (60 * 1000);
+
+        Float total = (precoHora/60) * diffMinutes;
+        
+        return total;
     }
-
+    
+    /**
+     * Obtem a hora e data atual.
+     * @return Timestamp com a hora e data atual.
+     */
+    public Timestamp getDateNow() {
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        Timestamp currentTimestamp = new Timestamp(now.getTime());
+        return currentTimestamp;
+    }
     /**
      * Getters e Setters dos atributos da classe
      *
@@ -130,19 +147,19 @@ public class Aluguel extends Entidade {
         this.vaga = vaga;
     }
 
-    public LocalDateTime getHorararioEntrada() {
+    public Timestamp getHorararioEntrada() {
         return dataEntrada;
     }
 
-    public void setHorararioEntrada(LocalDateTime horararioEntrada) {
+    public void setHorararioEntrada(Timestamp horararioEntrada) {
         this.dataEntrada = horararioEntrada;
     }
 
-    public LocalDateTime getHorarioSaida() {
+    public Timestamp getHorarioSaida() {
         return dataSaida;
     }
 
-    public void setHorarioSaida(LocalDateTime horarioSaida) {
+    public void setHorarioSaida(Timestamp horarioSaida) {
         this.dataSaida = horarioSaida;
     }
 

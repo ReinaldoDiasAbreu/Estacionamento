@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  * Operações de persistência com a entidade Aluguel.
  * 
@@ -73,35 +72,16 @@ public class AluguelDao extends AbstractDao<Aluguel, Long> {
             if (o.getId() == null || o.getId() == 0) {
                 pstmt.setLong(1, o.getCliente().getId());
                 pstmt.setLong(2, o.getVaga().getId());
-                pstmt.setString(3, o.getHorararioEntrada().toString());
-                if(o.getHorarioSaida() == null){
-                     pstmt.setString(4,"ND");
-                }else{
-                    pstmt.setString(4, o.getHorarioSaida().toString());
-                }
-                if( o.getValorTotal() == null){
-                     pstmt.setFloat(5, 0);
-                }
-                else{
-                    pstmt.setFloat(5, o.getValorTotal());
-                }
+                pstmt.setTimestamp(3, o.getHorararioEntrada());
+                pstmt.setTimestamp(4, o.getHorarioSaida());
+                pstmt.setFloat(5, o.getValorTotal());
             } else {
                 pstmt.setLong(1, o.getCliente().getId());
                 pstmt.setLong(2, o.getVaga().getId());
-                pstmt.setString(3, o.getHorararioEntrada().toString());
-                if(o.getHorarioSaida() == null){
-                     pstmt.setString(4, "ND");
-                }
-                else{
-                    pstmt.setString(4, o.getHorarioSaida().toString());
-                }
-                if( o.getValorTotal() == null){
-                     pstmt.setFloat(5, 0);
-                }else{
-                    pstmt.setFloat(5, o.getValorTotal());
-                }
+                pstmt.setTimestamp(3, o.getHorararioEntrada());
+                pstmt.setTimestamp(4, o.getHorarioSaida());
+                pstmt.setFloat(5, o.getValorTotal());
                 pstmt.setLong(6, o.getId());
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(AluguelDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,8 +107,8 @@ public class AluguelDao extends AbstractDao<Aluguel, Long> {
             vaga = new VagaDao().localizarPorId(resultSet.getLong("vagaid"));
             aluguel.setVaga(vaga);
             
-            aluguel.setHorararioEntrada(resultSet.getTimestamp("horaentrada").toLocalDateTime());
-            aluguel.setHorarioSaida(resultSet.getTimestamp("horasaida").toLocalDateTime());
+            aluguel.setHorararioEntrada(resultSet.getTimestamp("horaentrada"));
+            aluguel.setHorarioSaida(resultSet.getTimestamp("horasaida"));
             
             aluguel.setValorTotal(resultSet.getFloat("valortotal"));
 
@@ -163,8 +143,8 @@ public class AluguelDao extends AbstractDao<Aluguel, Long> {
                 vaga = new VagaDao().localizarPorId(resultSet.getLong("vagaid"));
                 aluguel.setVaga(vaga);
 
-                aluguel.setHorararioEntrada(resultSet.getTimestamp("horaentrada").toLocalDateTime());
-                aluguel.setHorarioSaida(resultSet.getTimestamp("horasaida").toLocalDateTime());
+                aluguel.setHorararioEntrada(resultSet.getTimestamp("horaentrada"));
+                aluguel.setHorarioSaida(resultSet.getTimestamp("horasaida"));
 
                 aluguel.setValorTotal(resultSet.getFloat("valortotal"));
 
