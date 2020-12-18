@@ -178,7 +178,7 @@ public class Aluguel extends Entidade {
      */
     @Override
     public String toString() {
-        return "Aluguel{ cliente=" + cliente + ", vaga=" + vaga + ", horarioEntrada=" + dataEntrada + ", horarioSaida=" + dataSaida + ", valorTotal=" + valorTotal + '}';
+        return "[Id:" + this.getId() + " | Vaga:" + vaga.getId() + " | Cpf : " + cliente.getCpf() + " | " + cliente.getNome() + " | In: " + dataEntrada + " | Out: " + dataSaida + " | Valor: " + valorTotal + " ]" ;
     }
 
 }

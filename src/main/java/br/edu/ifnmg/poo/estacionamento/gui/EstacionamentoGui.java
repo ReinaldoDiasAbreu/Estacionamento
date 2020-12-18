@@ -245,7 +245,9 @@ public class EstacionamentoGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditEmpActionPerformed
 
     private void btnListRentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListRentsActionPerformed
-        
+        AlugueisCadastrados listRents = new AlugueisCadastrados();
+        listRents.setLocationRelativeTo(this);
+        listRents.setVisible(true);
     }//GEN-LAST:event_btnListRentsActionPerformed
 
     /**
