@@ -1,8 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The MIT License (MIT)
+ *
+ * Copyright (c) [2020] [Cauã Ribeiro da Costa e Aguiar]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.ClienteDao;
@@ -12,7 +30,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
- *
+ * Show all registered clients, if any. And allow to update and delete them if necessary.
+ * 
  * @author Mirrális
  */
 public class ClientesCadastrados extends javax.swing.JFrame {
@@ -53,6 +72,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         registeredClientsList = new javax.swing.JList<>();
         btnGoBack = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         menuEdit.setMnemonic('e');
         menuEdit.setText("Editar");
@@ -75,6 +95,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes Cadastrados");
 
+        registeredClientsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         registeredClientsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 registeredClientsListMouseReleased(evt);
@@ -82,6 +103,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(registeredClientsList);
 
+        btnGoBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnGoBack.setText("Voltar");
         btnGoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,27 +111,35 @@ public class ClientesCadastrados extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Lista de Clientes");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGoBack)))
+                        .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(btnGoBack)
-                .addGap(20, 20, 20))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,16 +174,13 @@ public class ClientesCadastrados extends javax.swing.JFrame {
             
             registeredClientsList.setSelectedIndex(selectedClientIndex);
 
-            System.out.println(selectedClientIndex);
-
             // Mostre as opções em pop-up
             popUpClient.show(registeredClientsList, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_registeredClientsListMouseReleased
 
     private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
-        
-        EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, true);
+        EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, false);
         editClient.setLocationRelativeTo(this);
         editClient.setVisible(true);
     }//GEN-LAST:event_menuEditActionPerformed
@@ -161,7 +188,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
     private void menuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeleteActionPerformed
         
         // Remove do banco primeiro
-        //new TarefaDao().excluir(clientsListModel.get(selectedClientIndex));
+        new ClienteDao().excluir(clientsListModel.get(selectedClientIndex));
         
         clientsListModel.remove(registeredClientsList.getSelectedIndex());
     }//GEN-LAST:event_menuDeleteActionPerformed
@@ -208,6 +235,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGoBack;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuDelete;

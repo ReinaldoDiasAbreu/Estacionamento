@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) [2020] [Mirralis Dias Santana]
+ * Copyright (c) [2020] [Mirrális Dias Santana]
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -32,7 +32,8 @@ import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 
 /**
- *
+ * Window for renting a slot
+ * 
  * @author Mirrális
  */
 public class AlugarVaga extends javax.swing.JFrame {
@@ -43,7 +44,7 @@ public class AlugarVaga extends javax.swing.JFrame {
     private  final DefaultListModel<Vaga> availableSlotsModel;
 
     /**
-     * Creates new form Alugar
+     * Creates new form AlugarVaga
      */
     public AlugarVaga() {
         
@@ -71,6 +72,10 @@ public class AlugarVaga extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        errorDialogue = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        btnGoBackErr = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnCancel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
@@ -81,9 +86,62 @@ public class AlugarVaga extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         availableSlotsList = new javax.swing.JList<>();
 
+        errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setText("Selecione o cliente e uma vaga para prosseguir!");
+
+        btnGoBackErr.setText("Voltar");
+        btnGoBackErr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoBackErrActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
+                    .addComponent(btnGoBackErr))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(btnGoBackErr)
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout errorDialogueLayout = new javax.swing.GroupLayout(errorDialogue.getContentPane());
+        errorDialogue.getContentPane().setLayout(errorDialogueLayout);
+        errorDialogueLayout.setHorizontalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        errorDialogueLayout.setVerticalGroup(
+            errorDialogueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        errorDialogue.setVisible(false);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alugar Vaga");
 
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +149,7 @@ public class AlugarVaga extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave.setText("Alugar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,12 +157,16 @@ public class AlugarVaga extends javax.swing.JFrame {
             }
         });
 
+        lblClients.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblClients.setText("Clientes:");
 
+        clientsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(clientsList);
 
+        lblAvailableSlots.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblAvailableSlots.setText("Vagas disponíveis:");
 
+        availableSlotsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jScrollPane2.setViewportView(availableSlotsList);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -118,9 +181,9 @@ public class AlugarVaga extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancel)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSave)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -142,11 +205,11 @@ public class AlugarVaga extends javax.swing.JFrame {
                 .addComponent(lblAvailableSlots)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnSave))
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -168,23 +231,50 @@ public class AlugarVaga extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Saves the rent information in the database when clicking "Alugar"
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
-        aluguel.setCliente(clientsList.getSelectedValue());
-        aluguel.setVaga(availableSlotsList.getSelectedValue());
+        Cliente client = clientsList.getSelectedValue();
+        Vaga slot = availableSlotsList.getSelectedValue();
         
-        if(aluguel.registraEntrada()){
-            new AluguelDao().salvar(aluguel);
+        if(client != null && slot != null)
+        {
+            aluguel.setCliente(client);
+            aluguel.setVaga(slot);
+
+            if(aluguel.registraEntrada()){
+                new AluguelDao().salvar(aluguel);
+            }
+            else{
+                System.out.println("Não foi possível registrar o aluguel para esta vaga.");
+            }
+
+            dispose();
         }
-        else{
-            System.out.println("Não foi possível registrar o aluguel para esta vaga.");
+        else
+        {
+            errorDialogue.setSize(errorDialogue.getPreferredSize());
+            errorDialogue.setLocationRelativeTo(this);
+            errorDialogue.setVisible(true);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
-
+    
+    /**
+     * Releases this window's resources when clicking "Cancelar"
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    /**
+     * Releases the error dialogue's resources when clicking "Voltar"
+     */
+    private void btnGoBackErrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackErrActionPerformed
+        errorDialogue.dispose();
+    }//GEN-LAST:event_btnGoBackErrActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,9 +314,13 @@ public class AlugarVaga extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<Vaga> availableSlotsList;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnGoBackErr;
     private javax.swing.JButton btnSave;
     private javax.swing.JList<Cliente> clientsList;
+    private javax.swing.JDialog errorDialogue;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAvailableSlots;
