@@ -93,7 +93,6 @@ public class Aluguel extends Entidade {
     public void registrarSaida(Float precoHora) {
         this.dataSaida = getDateNow();
         valorTotal = calcularPreco(precoHora);
-        vaga.liberaVaga();
     }
 
     /**
@@ -108,10 +107,10 @@ public class Aluguel extends Entidade {
         long dateIn = dataEntrada.getTime();
         long dateOut = dataSaida.getTime();
 
-        long diff = dateOut - dateIn;
-        long diffMinutes = diff / (60 * 1000);
+        Long diff = dateOut - dateIn;
+        Float diffMinutes = (float)diff / 60000.f;
 
-        Float total = (precoHora/60) * diffMinutes;
+        Float total = (precoHora/60.F) * diffMinutes;
         
         return total;
     }

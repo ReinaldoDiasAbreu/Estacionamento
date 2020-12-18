@@ -167,6 +167,7 @@ public class EditarCliente extends javax.swing.JFrame {
         errorDialogue.setVisible(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Nome:");
 

@@ -35,6 +35,8 @@ import java.util.ArrayList;
  */
 public class Payment extends javax.swing.JFrame {
 
+    Aluguel rent = new Aluguel();
+    
     /**
      * Creates new form Payment
      */
@@ -66,7 +68,7 @@ public class Payment extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnPay = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -207,62 +209,68 @@ public class Payment extends javax.swing.JFrame {
         // Pega as informações do aluguel e calcula o valor
         Long id = Long.parseLong(rentId.getText());
         
-        // Calaliza o aluguel
-        Aluguel rent = new AluguelDao().localizarPorId(id);
+        rent = new AluguelDao().localizarPorId(id);
         
-        // Busca o estacionamento com id 1
+        // Busca o estacionamento com id = 1
         ArrayList<Estacionamento> estacionamentos = new ArrayList<>();
         estacionamentos = new EstacionamentoDao().localizarTodos();
-        
+
         Estacionamento est = estacionamentos.get(0);
 
+        rent.setHorarioSaida(rent.getDateNow()); // Pego a data de saída
+        rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+        
         rentCliente.setText(rent.getCliente().getNome());
         rentVaga.setText(rent.getVaga().getId().toString());
         rentHoraIn.setText(rent.getHorararioEntrada().toString());
-        rent.setHorarioSaida(rent.getDateNow()); // Pego a data de saída
-        rentHoraOut.setText(rent.getHorarioSaida().toString());
-        rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+
+        rentHoraOut.setText(rent.getHorarioSaida().toString());        
         rentValorTotal.setText(rent.getValorTotal().toString());
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
         // Realizar Pagamento e liberar vaga
+        
+        rent.getVaga().liberaVaga();
+        new AluguelDao().salvar(rent);
+        
+        dispose();
     }//GEN-LAST:event_btnPayActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Payment().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Payment().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPay;

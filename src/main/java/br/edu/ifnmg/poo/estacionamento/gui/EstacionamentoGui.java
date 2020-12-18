@@ -56,6 +56,7 @@ public class EstacionamentoGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estacionamento");
+        setResizable(false);
 
         btnRent.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRent.setText("Alugar vaga");

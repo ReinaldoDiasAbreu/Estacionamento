@@ -72,12 +72,12 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
             if (o.getId() == null || o.getId() == 0) {
                 pstmt.setString(1, o.getCpf());
                 pstmt.setString(2, o.getNome());
-                pstmt.setLong(3, o.getSenha());
+                pstmt.setString(3, o.getSenha());
                 pstmt.setString(4, o.getTelefone());
             } else {
                 pstmt.setString(1, o.getCpf());
                 pstmt.setString(2, o.getNome());
-                pstmt.setLong(3, o.getSenha());
+                pstmt.setString(3, o.getSenha());
                 pstmt.setString(4, o.getTelefone());
                 pstmt.setLong(5, o.getId());
             }
@@ -97,7 +97,8 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
             funcionario.setId(resultSet.getLong("id"));
             funcionario.setCpf(resultSet.getString("cpf"));
             funcionario.setNome(resultSet.getString("nome"));
-            funcionario.setSenha(resultSet.getLong("senha"));
+            funcionario.setSenha(resultSet.getString("senha"));
+            funcionario.setTelefone(resultSet.getString("telefone"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -123,7 +124,8 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
                 funcionario.setId(resultSet.getLong("id"));
                 funcionario.setCpf(resultSet.getString("cpf"));
                 funcionario.setNome(resultSet.getString("nome"));
-                funcionario.setSenha(resultSet.getLong("senha"));
+                funcionario.setSenha(resultSet.getString("senha"));
+                funcionario.setTelefone(resultSet.getString("telefone"));
                 
                 // Insere o cliente na lista de tarefas recuperadas
                 funcionarios.add(funcionario);
@@ -137,33 +139,47 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
         return funcionarios;
     }
         
-    /**
-     * Retorna o funcionário que tiver cpf e senha idênticos
-     * @return Funcionario
-     */
-    public Funcionario retornaFuncionarioLogin() {
+    
+    public void ajustarIdDeclaracao(PreparedStatement pstmt, String cpf, String senha) {
+        try {
+            if(cpf instanceof String && senha instanceof String) {
+                pstmt.setString(1, (String) cpf);
+                pstmt.setString(2, (String) senha);
+            }
 
-        // Declara referência para reter o(s) objeto(s) a ser(em) recuperado(s)
-        Funcionario objeto = new Funcionario();
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Funcionario localizarPorCpfSenha(Funcionario func) {
+        // Declara referência para reter o objeto a ser recuperado
+        Funcionario objeto = null;
 
         // Tenta preparar uma sentença SQL para a conexão já estabelecida
         try (PreparedStatement pstmt
                 = ConexaoBd.getConexao().prepareStatement(
-                        // Sentença SQL para recuperação de todos os registros
+                        // Sentença SQL para busca por chave primária
                         getFuncionarioSenha())) {
+
+            // Prepara a declaração com os dados do objeto passado
+            ajustarIdDeclaracao(pstmt, func.getCpf(), func.getSenha());
 
             // Executa o comando SQL
             ResultSet resultSet = pstmt.executeQuery();
 
-            // Extrai objeto(s) do(s) respectivo(s) registro(s) do banco de dados
-            objeto = extrairObjeto(resultSet);
+            // Se há resultado retornado...
+            if (resultSet.next()) {
+                // ... extrai objeto do respectivo registro do banco de dados
+                objeto = extrairObjeto(resultSet);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Devolve uma lista vazia (nenhum registro encontrado) 
-        // ou a relação de objeto(s) recuperado(s)
+        // Devolve nulo (objeto não encontrado) ou o objeto recuperado
         return objeto;
     }
+    
 }

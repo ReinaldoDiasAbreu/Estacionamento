@@ -94,6 +94,7 @@ public class ClientesCadastrados extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes Cadastrados");
+        setResizable(false);
 
         registeredClientsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         registeredClientsList.addMouseListener(new java.awt.event.MouseAdapter() {

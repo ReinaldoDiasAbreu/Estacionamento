@@ -23,8 +23,10 @@
 package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.EstacionamentoDao;
+import br.edu.ifnmg.poo.estacionamento.dao.FuncionarioDao;
 import br.edu.ifnmg.poo.estacionamento.dao.VagaDao;
 import br.edu.ifnmg.poo.estacionamento.entity.Estacionamento;
+import br.edu.ifnmg.poo.estacionamento.entity.Funcionario;
 import br.edu.ifnmg.poo.estacionamento.entity.Vaga;
 
 /**
@@ -72,10 +74,10 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtEmpCPF = new javax.swing.JTextField();
+        txtEmpName = new javax.swing.JTextField();
+        txtEmpPhone = new javax.swing.JTextField();
+        txtEmpPwd = new javax.swing.JTextField();
 
         errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -182,12 +184,6 @@ public class CriarEstacionamento extends javax.swing.JFrame {
 
         jLabel12.setText("Telefone:");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -207,22 +203,22 @@ public class CriarEstacionamento extends javax.swing.JFrame {
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel9)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel11)
                                             .addGap(18, 18, 18)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(txtEmpPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel12)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtEmpPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel8)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(44, 44, 44)
                                     .addComponent(jLabel10)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtEmpCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
@@ -270,18 +266,18 @@ public class CriarEstacionamento extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmpCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmpPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmpPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,16 +315,30 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         String phone = txtPhone.getText();
         int phoneSize = phone.length();
         
+        String empName = txtEmpName.getText();
+        int empNameSize = empName.length();
+        
+        String empCPF = txtEmpCPF.getText();
+        int empCPFSize = empCPF.length();
+        
+        String empPhone = txtEmpPhone.getText();
+        int empPhoneSize = empPhone.length();
+        
+        String empPwd = txtEmpPwd.getText();
+        int empPwdSize = empPwd.length();
+        
         try
         {
-            if(!((nameSize > 0 && nameSize <= 100) && 
-                 (addressSize > 0 && addressSize <= 100) && 
-                 (phoneSize > 0 && phoneSize <= 11)))
+            if(!((nameSize > 0 && nameSize <= 100) && (addressSize > 0 && addressSize <= 100) && 
+                 (phoneSize > 0 && phoneSize <= 11) && (empNameSize > 0 && empNameSize <= 50) &&
+                 (empCPFSize > 0 && empCPFSize <= 11) && (empCPFSize > 0 && empCPFSize <= 20) &&
+                 (empCPFSize > 0 && empCPFSize <= 20)))
             {
                 throw new Exception();
             }
             
             Estacionamento parking = new Estacionamento();
+            Funcionario employee = new Funcionario();
 
             parking.setNome(name);
             parking.setEndereco(address);
@@ -341,6 +351,13 @@ public class CriarEstacionamento extends javax.swing.JFrame {
             parking.setQuantVagas(totalSlots > 0 ? totalSlots : 2);
             
             new EstacionamentoDao().salvar(parking);
+            
+            employee.setNome(empName);
+            employee.setCpf(empCPF);
+            employee.setTelefone(empPhone);
+            employee.setSenha(empPwd);
+            
+            new FuncionarioDao().salvar(employee);
 
             for(int i=0; i < parking.getQuantVagas(); i++){
                 Vaga vaga = new Vaga();
@@ -366,10 +383,6 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         errorDialogue.dispose();
     }//GEN-LAST:event_btnGoBackActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGoBack;
@@ -389,11 +402,11 @@ public class CriarEstacionamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtEmpCPF;
+    private javax.swing.JTextField txtEmpName;
+    private javax.swing.JTextField txtEmpPhone;
+    private javax.swing.JTextField txtEmpPwd;
     private javax.swing.JTextField txtHourlyPrice;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;
