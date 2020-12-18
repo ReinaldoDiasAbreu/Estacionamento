@@ -140,6 +140,7 @@ public class AlugarVaga extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alugar Vaga");
+        setResizable(false);
 
         btnCancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCancel.setText("Cancelar");

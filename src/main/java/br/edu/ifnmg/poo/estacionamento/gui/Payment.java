@@ -30,11 +30,14 @@ import br.edu.ifnmg.poo.estacionamento.entity.Estacionamento;
 import java.util.ArrayList;
 
 /**
- *
+ * Manages the payment process
+ * 
  * @author Mirrális
  */
 public class Payment extends javax.swing.JFrame {
 
+    Aluguel rent = new Aluguel();
+    
     /**
      * Creates new form Payment
      */
@@ -66,13 +69,19 @@ public class Payment extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnPay = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pagamento");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("ID Aluguel:");
 
         rentId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        rentId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentIdActionPerformed(evt);
+            }
+        });
 
         btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSearch.setText("Buscar");
@@ -133,7 +142,7 @@ public class Payment extends javax.swing.JFrame {
                         .addComponent(rentVaga))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,9 +150,9 @@ public class Payment extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rentHoraOut, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(rentHoraOut)))
                         .addGap(18, 18, 18)
-                        .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4)
@@ -155,12 +164,13 @@ public class Payment extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(rentId, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 146, Short.MAX_VALUE))
                             .addComponent(rentCliente))))
                 .addGap(50, 50, 50))
         );
@@ -203,66 +213,91 @@ public class Payment extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fill the text fields with the rent information, if the rent id is found
+     */
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // Pega as informações do aluguel e calcula o valor
         Long id = Long.parseLong(rentId.getText());
         
-        // Calaliza o aluguel
-        Aluguel rent = new AluguelDao().localizarPorId(id);
+        rent = new AluguelDao().localizarPorId(id);
         
-        // Busca o estacionamento com id 1
         ArrayList<Estacionamento> estacionamentos = new ArrayList<>();
         estacionamentos = new EstacionamentoDao().localizarTodos();
-        
-        Estacionamento est = estacionamentos.get(0);
 
+        Estacionamento est = estacionamentos.get(0);
+        
+        if(rent == null)
+            return;
+        
+        // Just calculate the hour in and total cost if this rent wasn't paid before
+        if(rent.getHorarioSaida() == null)
+        {
+            rent.setHorarioSaida(rent.getDateNow());
+            rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+        }
+        else // Hide the pay button if the rent was already paid
+            btnPay.setVisible(false);
+        
         rentCliente.setText(rent.getCliente().getNome());
         rentVaga.setText(rent.getVaga().getId().toString());
         rentHoraIn.setText(rent.getHorararioEntrada().toString());
-        rent.setHorarioSaida(rent.getDateNow()); // Pego a data de saída
-        rentHoraOut.setText(rent.getHorarioSaida().toString());
-        rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+
+        rentHoraOut.setText(rent.getHorarioSaida().toString());        
         rentValorTotal.setText(rent.getValorTotal().toString());
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    /**
+     * Free up the spot and save the rent in the DB
+     */
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-        // Realizar Pagamento e liberar vaga
+     
+        rent.getVaga().liberaVaga();
+        new AluguelDao().salvar(rent);
+        
+        dispose();
     }//GEN-LAST:event_btnPayActionPerformed
+
+    /**
+     * Just call the search method when pressing Enter on the text field
+     */
+    private void rentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentIdActionPerformed
+        btnSearchActionPerformed(evt);
+    }//GEN-LAST:event_rentIdActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Payment().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Payment().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPay;

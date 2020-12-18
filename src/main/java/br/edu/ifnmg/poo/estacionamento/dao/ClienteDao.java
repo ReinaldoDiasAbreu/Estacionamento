@@ -124,7 +124,7 @@ public class ClienteDao extends AbstractDao<Cliente, Long> {
 
     @Override
     public ArrayList<Cliente> extrairObjetos(ResultSet resultSet) {
-        // Cria referência para inserção das tarefas a serem mapeadas
+        // Cria referência para inserção dos clientes a serem mapeadas
         ArrayList<Cliente> clientes = new ArrayList<>();
         
         // Tenta...
@@ -146,7 +146,7 @@ public class ClienteDao extends AbstractDao<Cliente, Long> {
                 cliente.setFabricante(resultSet.getString("fabricante"));
                 cliente.setCor(resultSet.getString("cor"));
                 
-                // Insere o cliente na lista de tarefas recuperadas
+                // Insere o cliente na lista de clientes recuperados
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -158,6 +158,12 @@ public class ClienteDao extends AbstractDao<Cliente, Long> {
         return clientes;
     }
     
+    /**
+     * Cria lista de objetos Cliente recuperados do banco de dados
+     * somente incluindo id, cpf, nome, telefone e endereço
+     * @param resultSet Resultado proveniente do banco de dados relacional.
+     * @return ArrayList Cliente
+     */
     public ArrayList<Cliente> extrairObjetosCliente(ResultSet resultSet) {
         // Cria referência para inserção das tarefas a serem mapeadas
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -177,18 +183,23 @@ public class ClienteDao extends AbstractDao<Cliente, Long> {
                 cliente.setTelefone(resultSet.getString("telefone"));
                 cliente.setEndereco(resultSet.getString("endereco"));
                 
-                // Insere o cliente na lista de tarefas recuperadas
+                // Insere o cliente na lista de clientes recuperados
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // Devolve a lista de clientes reconstituídas dos registros do banco 
+        // Devolve a lista de clientes reconstituídos dos registros do banco 
         // de dados
         return clientes;
     }
     
+    /**
+     * Retorna ArrayList do cliente com seus dados 
+     * ( id, cpf, nome, telefone e endereço)
+     * @return ArrayList Cliente
+     */
     public ArrayList<Cliente> retornaDadosClientes() {
 
         // Declara referência para reter o(s) objeto(s) a ser(em) recuperado(s)

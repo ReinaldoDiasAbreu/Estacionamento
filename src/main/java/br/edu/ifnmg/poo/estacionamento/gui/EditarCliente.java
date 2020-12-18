@@ -87,8 +87,8 @@ public class EditarCliente extends javax.swing.JFrame {
 
         errorDialogue = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        btnGoBackErr = new javax.swing.JButton();
+        lblErrorMsg = new javax.swing.JLabel();
+        btnErrGoBack = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -113,14 +113,15 @@ public class EditarCliente extends javax.swing.JFrame {
         btnGoBack = new javax.swing.JButton();
 
         errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        errorDialogue.setResizable(false);
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("Algum dos campos preenchidos está inválido!");
+        lblErrorMsg.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMsg.setText("Algum dos campos preenchidos está inválido!");
 
-        btnGoBackErr.setText("Voltar");
-        btnGoBackErr.addActionListener(new java.awt.event.ActionListener() {
+        btnErrGoBack.setText("Voltar");
+        btnErrGoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoBackErrActionPerformed(evt);
+                btnErrGoBackActionPerformed(evt);
             }
         });
 
@@ -130,20 +131,20 @@ public class EditarCliente extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(242, 242, 242)
-                .addComponent(btnGoBackErr)
+                .addComponent(btnErrGoBack)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblErrorMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblErrorMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(btnGoBackErr)
+                .addComponent(btnErrGoBack)
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
@@ -167,13 +168,18 @@ public class EditarCliente extends javax.swing.JFrame {
         errorDialogue.setVisible(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nome:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("CPF:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Telefone:");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Endereço:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -182,12 +188,16 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Dados Cliente:");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Placa:");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Modelo:");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Fabricante:");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Cor:");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -383,9 +393,9 @@ public class EditarCliente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGoBackActionPerformed
 
-    private void btnGoBackErrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackErrActionPerformed
+    private void btnErrGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErrGoBackActionPerformed
         errorDialogue.dispose();
-    }//GEN-LAST:event_btnGoBackErrActionPerformed
+    }//GEN-LAST:event_btnErrGoBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,13 +440,12 @@ public class EditarCliente extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnErrGoBack;
     private javax.swing.JButton btnGoBack;
-    private javax.swing.JButton btnGoBackErr;
     private javax.swing.JButton btnSave;
     private javax.swing.JDialog errorDialogue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -448,6 +457,7 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblErrorMsg;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtColor;

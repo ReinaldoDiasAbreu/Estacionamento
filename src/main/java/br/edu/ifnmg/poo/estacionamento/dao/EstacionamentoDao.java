@@ -99,12 +99,6 @@ public class EstacionamentoDao extends AbstractDao<Estacionamento, Long>{
             estacionamento.setTelefone(resultSet.getString("telefone"));
             estacionamento.setPrecoHora(resultSet.getFloat("precohora"));
             estacionamento.setQuantVagas(resultSet.getInt("quantvagas"));
-            /*
-            ArrayList<Aluguel> alugueis = new AluguelDao().localizarTodos();
-            estacionamento.setAlugueis(alugueis);
-            ArrayList<Vaga> vagas = new VagaDao().localizarTodos();
-            estacionamento.setVagas(vagas);
-            */
             
         } catch (SQLException e) {
             e.printStackTrace();
