@@ -23,10 +23,20 @@
 
 package br.edu.ifnmg.poo.estacionamento.gui;
 
+import br.edu.ifnmg.poo.estacionamento.dao.ConexaoBd;
 import br.edu.ifnmg.poo.estacionamento.dao.EstacionamentoDao;
 import br.edu.ifnmg.poo.estacionamento.entity.Cliente;
 import br.edu.ifnmg.poo.estacionamento.entity.Estacionamento;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -68,7 +78,8 @@ public class EstacionamentoGui extends javax.swing.JFrame {
         lblName = new javax.swing.JLabel();
         lblPhone = new javax.swing.JLabel();
         btnEditEmp = new javax.swing.JButton();
-        btnListRents = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
+        btnListRents1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estacionamento");
@@ -126,11 +137,19 @@ public class EstacionamentoGui extends javax.swing.JFrame {
             }
         });
 
-        btnListRents.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnListRents.setText("Exibir Aluguéis");
-        btnListRents.addActionListener(new java.awt.event.ActionListener() {
+        btnReport.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnReport.setText("Relatório Aluguéis");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListRentsActionPerformed(evt);
+                btnReportActionPerformed(evt);
+            }
+        });
+
+        btnListRents1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnListRents1.setText("Exibir Aluguéis");
+        btnListRents1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListRents1ActionPerformed(evt);
             }
         });
 
@@ -148,7 +167,7 @@ public class EstacionamentoGui extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEditEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(36, 36, 36)
-                        .addComponent(btnListRents, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnListRents1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,10 +178,15 @@ public class EstacionamentoGui extends javax.swing.JFrame {
                             .addComponent(btnPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHourlyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblHourlyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,10 +210,11 @@ public class EstacionamentoGui extends javax.swing.JFrame {
                         .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblHourlyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEditEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                    .addComponent(btnListRents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListRents1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -244,11 +269,33 @@ public class EstacionamentoGui extends javax.swing.JFrame {
         editEmp.setVisible(true);
     }//GEN-LAST:event_btnEditEmpActionPerformed
 
-    private void btnListRentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListRentsActionPerformed
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        try (InputStream in = getClass().getResourceAsStream("/RelatorioSistema.jasper")) {
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(in, null, ConexaoBd.getConexao());
+
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            
+            // Exibe o relatório de maneira modal
+            JDialog dialog = new JDialog(this);
+            dialog.setContentPane(jasperViewer.getContentPane());
+            dialog.setSize(jasperViewer.getSize());
+            dialog.setTitle("Relatório de Aluguéis");
+            dialog.setModal(true);
+            dialog.setVisible(true);
+
+        } catch (IOException ex) {
+            Logger.getLogger(EstacionamentoGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(EstacionamentoGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportActionPerformed
+
+    private void btnListRents1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListRents1ActionPerformed
         AlugueisCadastrados listRents = new AlugueisCadastrados();
         listRents.setLocationRelativeTo(this);
         listRents.setVisible(true);
-    }//GEN-LAST:event_btnListRentsActionPerformed
+    }//GEN-LAST:event_btnListRents1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,9 +336,10 @@ public class EstacionamentoGui extends javax.swing.JFrame {
     private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnEditEmp;
     private javax.swing.JButton btnListClients;
-    private javax.swing.JButton btnListRents;
+    private javax.swing.JButton btnListRents1;
     private javax.swing.JButton btnPayment;
     private javax.swing.JButton btnRent;
+    private javax.swing.JButton btnReport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHourlyPrice;

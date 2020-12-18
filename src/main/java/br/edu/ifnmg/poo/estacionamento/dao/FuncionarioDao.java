@@ -127,7 +127,7 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
                 funcionario.setSenha(resultSet.getString("senha"));
                 funcionario.setTelefone(resultSet.getString("telefone"));
                 
-                // Insere o cliente na lista de tarefas recuperadas
+                // Insere o funcionario na lista de funcionarios recuperadas
                 funcionarios.add(funcionario);
             }
         } catch (SQLException ex) {
@@ -138,8 +138,12 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
         // de dados
         return funcionarios;
     }
-        
-    
+    /**
+     * Insere o valor da chave primária na senteça SQL específica para seu uso.
+     * @param pstmt Declaração previamente preparada.
+     * @param cpf Cpf do funcionario a ser inserido na sentença
+     * @param senha Senha do funcionario a ser inserida na sentença
+     */
     public void ajustarIdDeclaracao(PreparedStatement pstmt, String cpf, String senha) {
         try {
             if(cpf instanceof String && senha instanceof String) {
@@ -151,7 +155,13 @@ public class FuncionarioDao extends AbstractDao<Funcionario, Long>{
             Logger.getLogger(FuncionarioDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /**
+     * Retorna o funcionário do banco de dados
+     * com cpf e senha do funcionário passado
+     * @param func Funcionário a ser comparado
+     * @return Funcionario
+     */
     public Funcionario localizarPorCpfSenha(Funcionario func) {
         // Declara referência para reter o objeto a ser recuperado
         Funcionario objeto = null;
