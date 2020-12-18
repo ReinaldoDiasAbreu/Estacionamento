@@ -75,6 +75,11 @@ public class Payment extends javax.swing.JFrame {
         jLabel1.setText("ID Aluguel:");
 
         rentId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        rentId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentIdActionPerformed(evt);
+            }
+        });
 
         btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSearch.setText("Buscar");
@@ -211,14 +216,22 @@ public class Payment extends javax.swing.JFrame {
         
         rent = new AluguelDao().localizarPorId(id);
         
-        // Busca o estacionamento com id = 1
+        // Busca o estacionamento
         ArrayList<Estacionamento> estacionamentos = new ArrayList<>();
         estacionamentos = new EstacionamentoDao().localizarTodos();
 
         Estacionamento est = estacionamentos.get(0);
-
-        rent.setHorarioSaida(rent.getDateNow()); // Pego a data de saída
-        rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+        
+        if(rent == null)
+            return;
+        
+        if(rent.getHorarioSaida() == null)
+        {
+            rent.setHorarioSaida(rent.getDateNow()); // Pego a data de saída
+            rent.setValorTotal(rent.calcularPreco(est.getPrecoHora()));
+        }
+        else
+            btnPay.setVisible(false);
         
         rentCliente.setText(rent.getCliente().getNome());
         rentVaga.setText(rent.getVaga().getId().toString());
@@ -236,6 +249,10 @@ public class Payment extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_btnPayActionPerformed
+
+    private void rentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentIdActionPerformed
+        btnSearchActionPerformed(evt);
+    }//GEN-LAST:event_rentIdActionPerformed
 
     /**
      * @param args the command line arguments
