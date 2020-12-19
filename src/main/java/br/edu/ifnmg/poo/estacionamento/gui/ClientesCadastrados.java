@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) [2020] [Cauã Ribeiro da Costa e Aguiar]
+ * Copyright (c) [2020] [Mirrális Dias Santana]
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
- * Show all registered clients, if any. And allow to update and delete them if necessary.
+ * Show all registered clients and allow to update and delete them, if any.
  * 
  * @author Mirrális
  */
@@ -117,18 +117,18 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE))
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,8 +137,9 @@ public class ClientesCadastrados extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGoBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -161,10 +162,16 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Releases this window's resources when clicking "Voltar"
+     */
     private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
         dispose();
     }//GEN-LAST:event_btnGoBackActionPerformed
 
+    /**
+     * Exhibits a menu for updating and deleting the client when right clicking above it
+     */
     private void registeredClientsListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registeredClientsListMouseReleased
         
         if (evt.getButton() == MouseEvent.BUTTON3 && registeredClientsList.getModel().getSize() > 0) {
@@ -178,20 +185,28 @@ public class ClientesCadastrados extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_registeredClientsListMouseReleased
 
+    /**
+     * Creates a new window to modify the selected client from the list
+     */
     private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
         EditarCliente editClient = new EditarCliente(registeredClientsList.getSelectedValue(), this, false);
         editClient.setLocationRelativeTo(this);
         editClient.setVisible(true);
     }//GEN-LAST:event_menuEditActionPerformed
 
+    /**
+     * Deletes the selected client from the DB and update the list
+     */
     private void menuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeleteActionPerformed
         
-        // Remove do banco primeiro
         new ClienteDao().excluir(clientsListModel.get(selectedClientIndex));
         
         clientsListModel.remove(registeredClientsList.getSelectedIndex());
     }//GEN-LAST:event_menuDeleteActionPerformed
 
+    /**
+     * Updates the list with the passed client in a given index
+     */
     void updateClientsListModel(Cliente client)
     {
         clientsListModel.set(selectedClientIndex, client);

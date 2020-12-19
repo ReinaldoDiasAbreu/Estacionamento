@@ -75,19 +75,15 @@
                   </Group>
                   <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblName" min="-2" pref="243" max="-2" attributes="0"/>
-                              <Component id="lblHourlyPrice" min="-2" pref="243" max="-2" attributes="0"/>
-                              <Component id="lblPhone" min="-2" pref="243" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
+                      <Component id="lblName" min="-2" pref="243" max="-2" attributes="0"/>
+                      <Component id="lblHourlyPrice" min="-2" pref="243" max="-2" attributes="0"/>
+                      <Component id="lblPhone" min="-2" pref="243" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="btnReport" min="-2" pref="168" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
