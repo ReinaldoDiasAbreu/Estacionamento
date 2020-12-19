@@ -24,7 +24,6 @@ package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.EstacionamentoDao;
 import br.edu.ifnmg.poo.estacionamento.entity.Estacionamento;
-import br.edu.ifnmg.poo.estacionamento.gui.EstacionamentoGui;
 import java.util.ArrayList;
 
 /**

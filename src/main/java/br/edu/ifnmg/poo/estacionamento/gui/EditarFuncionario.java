@@ -1,9 +1,26 @@
-/* 
- * Material didático destinado ao curso
- * de Programação Orientada a Objetos do 
- * Bacharelado em Ciência da Computação 
- * do IFNMG - Câmpus Montes Claros
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) [2020] [Mirrális Dias Santana]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.FuncionarioDao;
@@ -11,7 +28,8 @@ import br.edu.ifnmg.poo.estacionamento.entity.Funcionario;
 import java.util.ArrayList;
 
 /**
- *
+ * Window for editing the employee's info
+ * 
  * @author Mirrális
  */
 public class EditarFuncionario extends javax.swing.JFrame {
@@ -65,6 +83,7 @@ public class EditarFuncionario extends javax.swing.JFrame {
         errorDialogue.setResizable(false);
 
         lblErrorMsg.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblErrorMsg.setText("Algum dos campos preenchidos está inválido!");
 
         btnErrGoBack.setText("Voltar");
@@ -242,6 +261,9 @@ public class EditarFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Saves the modifications made to the employee in the DB, if there is no data inconsistency 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         String name = txtEmpName.getText();
         int nameSize = name.length();
@@ -276,9 +298,10 @@ public class EditarFuncionario extends javax.swing.JFrame {
             
             new FuncionarioDao().salvar(emp);
             
-            dispose();
-            
-        } catch (Exception e) {
+            dispose();            
+        } 
+        catch (Exception e) // Pop up a error message if something went wrong
+        { 
             errorDialogue.setSize(errorDialogue.getPreferredSize());
             errorDialogue.setLocationRelativeTo(this);
             lblErrorMsg.setText(e.getMessage());
@@ -286,10 +309,16 @@ public class EditarFuncionario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Releases the error dialogue's resources when clicking "Voltar" on it
+     */
     private void btnErrGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErrGoBackActionPerformed
         errorDialogue.dispose();
     }//GEN-LAST:event_btnErrGoBackActionPerformed
 
+    /**
+     * Releases this window's resources when clicking "Voltar"
+     */
     private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
         dispose();
     }//GEN-LAST:event_btnGoBackActionPerformed

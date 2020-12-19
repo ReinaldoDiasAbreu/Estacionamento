@@ -20,6 +20,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.EstacionamentoDao;
@@ -30,7 +31,7 @@ import br.edu.ifnmg.poo.estacionamento.entity.Funcionario;
 import br.edu.ifnmg.poo.estacionamento.entity.Vaga;
 
 /**
- * Only used once, when accessing for the first time
+ * Window for creating the parking and the only employee when starting from an empty DB
  * 
  * @author Mirrális
  */
@@ -83,6 +84,7 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         errorDialogue.setResizable(false);
 
         lblErrorMsg.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblErrorMsg.setText("Algum dos campos preenchidos está inválido!");
 
         btnErrGoBack.setText("Voltar");
@@ -200,15 +202,13 @@ public class CriarEstacionamento extends javax.swing.JFrame {
                             .addGap(71, 71, 71)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(86, 86, 86)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtEmpName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtEmpPwd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel8)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(86, 86, 86)
-                                        .addComponent(txtEmpCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtEmpName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtEmpPwd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtEmpCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -310,6 +310,9 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Saves the provided parking and employee in the DB, if there is no data inconsistency 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
         String name = txtName.getText();
@@ -365,19 +368,21 @@ public class CriarEstacionamento extends javax.swing.JFrame {
             
             new FuncionarioDao().salvar(employee);
 
+            // Creates all the spots, and save them in th DB
             for(int i=0; i < parking.getQuantVagas(); i++){
                 Vaga vaga = new Vaga();
                 vaga.setDisponivel(1);
                 new VagaDao().salvar(vaga);
             }
-
+            
+            // Proceeds to the main window, if everything went smooth
             EstacionamentoGui parkingGUI = new EstacionamentoGui();
             parkingGUI.setLocationRelativeTo(this);
             parkingGUI.setVisible(true);
 
             dispose();
         }
-        catch(Exception e)
+        catch(Exception e) // Pop up a error message if something went wrong
         {
             errorDialogue.setSize(errorDialogue.getPreferredSize());
             errorDialogue.setLocationRelativeTo(this);
@@ -386,6 +391,9 @@ public class CriarEstacionamento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Releases the error dialogue's resources when clicking "Voltar" on it
+     */
     private void btnErrGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErrGoBackActionPerformed
         errorDialogue.dispose();
     }//GEN-LAST:event_btnErrGoBackActionPerformed

@@ -39,7 +39,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * Main window, where all functionalities can be accessed
+ * 
  * @author Mirrális
  */
 public class EstacionamentoGui extends javax.swing.JFrame {
@@ -178,15 +179,13 @@ public class EstacionamentoGui extends javax.swing.JFrame {
                             .addComponent(btnPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblHourlyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))))
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHourlyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,37 +237,56 @@ public class EstacionamentoGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Creates a window to list all registered clients
+     */
     private void btnListClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListClientsActionPerformed
         ClientesCadastrados cadastrados = new ClientesCadastrados();
         cadastrados.setLocationRelativeTo(this);
         cadastrados.setVisible(true);
     }//GEN-LAST:event_btnListClientsActionPerformed
 
+    /**
+     * Creates a window to pay the rent for a given slot
+     */
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
         Payment payment = new Payment();
         payment.setLocationRelativeTo(this);
         payment.setVisible(true);
     }//GEN-LAST:event_btnPaymentActionPerformed
 
+    /**
+     * Creates a window to add a new client.
+     * 
+     * It also uses EditarCliente for adding a new one, but passing an empty client, and true for the last parameter
+     */
     private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
-        // Also use EditarCliente for adding new clients, but passing an empty client
         EditarCliente cliente = new EditarCliente(new Cliente(), new ClientesCadastrados(), true);
         cliente.setLocationRelativeTo(this);
         cliente.setVisible(true);
     }//GEN-LAST:event_btnAddClientActionPerformed
 
+    /**
+     * Creates a window to rent an available slot
+     */
     private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         AlugarVaga alugar = new AlugarVaga();
         alugar.setLocationRelativeTo(this);
         alugar.setVisible(true);
     }//GEN-LAST:event_btnRentActionPerformed
 
+    /**
+     * Creates a window for editing the employee that manages the parking
+     */
     private void btnEditEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEmpActionPerformed
         EditarFuncionario editEmp = new EditarFuncionario();
         editEmp.setLocationRelativeTo(this);
         editEmp.setVisible(true);
     }//GEN-LAST:event_btnEditEmpActionPerformed
 
+    /**
+     * Creates a report of the already paid rents
+     */
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         try (InputStream in = getClass().getResourceAsStream("/RelatorioSistema.jasper")) {
 
@@ -291,6 +309,9 @@ public class EstacionamentoGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnReportActionPerformed
 
+    /**
+     * Creates a window to list all rents, even the paid ones
+     */
     private void btnListRents1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListRents1ActionPerformed
         AlugueisCadastrados listRents = new AlugueisCadastrados();
         listRents.setLocationRelativeTo(this);

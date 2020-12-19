@@ -20,6 +20,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 package br.edu.ifnmg.poo.estacionamento.gui;
 
 import br.edu.ifnmg.poo.estacionamento.dao.AluguelDao;
@@ -87,8 +88,10 @@ public class AlugarVaga extends javax.swing.JFrame {
         availableSlotsList = new javax.swing.JList<>();
 
         errorDialogue.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        errorDialogue.setResizable(false);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Selecione o cliente e uma vaga para prosseguir!");
 
         btnGoBackErr.setText("Voltar");
@@ -241,7 +244,7 @@ public class AlugarVaga extends javax.swing.JFrame {
         Cliente client = clientsList.getSelectedValue();
         Vaga slot = availableSlotsList.getSelectedValue();
         
-        if(client != null && slot != null)
+        if(client != null && slot != null) // if both client and slot are selected, do the rent process
         {
             aluguel.setCliente(client);
             aluguel.setVaga(slot);
@@ -271,7 +274,7 @@ public class AlugarVaga extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
-     * Releases the error dialogue's resources when clicking "Voltar"
+     * Releases the error dialogue's resources when clicking "Voltar" on it
      */
     private void btnGoBackErrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackErrActionPerformed
         errorDialogue.dispose();
